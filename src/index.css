@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    @variants responsive {
+      /* Hide scrollbar for Chrome, Safari, and Opera */
+      .scrollbar {
+        height: 300px;
+        width: 50%;
+        overflow: auto;
+        padding: 0 10px;
+    }
+    /*       ScrollBar 1        */
+    
+    #scrollbar1::-webkit-scrollbar {
+        width: 16px;
+    }
+    
+    #scrollbar1::-webkit-scrollbar-track {
+        border-radius: 8px;
+        background-color: #1E1E1E;
+
+    }
+    
+    #scrollbar1::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+      border: 3px solid transparent;
+       background-clip: content-box;
+        background-color: #22C55E;
+    }
+    }
+  } 
