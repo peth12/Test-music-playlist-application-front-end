@@ -4,7 +4,6 @@ import Main from "./Pages/Main";
 
 import Error from "./Pages/Error";
 import Playlist from "./Pages/Playlist";
-import CreatePlaylist from "./Pages/CreatePlaylist";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,11 +17,6 @@ const router = createBrowserRouter([
   {
     path: "/playlist/:id",
     element: <Playlist />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/create",
-    element: <CreatePlaylist />,
     errorElement: <Error />,
   }
 ])

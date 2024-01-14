@@ -1,9 +1,11 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
+const url = "http://localhost:8080/api"
+
 const addSongToPlaylist = (playlistId, songId) => {
   axios
-    .put(`http://localhost:8080/api/playlists/add-song`, {
+    .put(`${url}/playlists/add-song`, {
       playlistId: playlistId,
       songId: songId,
     })
@@ -13,9 +15,20 @@ const addSongToPlaylist = (playlistId, songId) => {
   console.log(`song id -> ${songId}`);
 };
 
-const createPlaylist = () => {
-  axios.post("http://localhost:8080/api/playlists", {});
+const createPlaylist = async (name, desc ) => {
+    await axios.post(`${url}/playlists`, {
+    name : name,
+    desc : desc,
+    songs : [],
+  });
+  location.reload();
+  
 };
+
+const removePlaylist = async (id) => {
+    await axios.delete(`${url}/playlists/${id}`);
+    window.location.href = "http://localhost:5173/"
+}
 
 const removeSongFromPlaylist = async (
   playlistId,
@@ -24,7 +37,7 @@ const removeSongFromPlaylist = async (
   reload
 ) => {
   try {
-    await axios.put(`http://localhost:8080/api/playlists/remove-song`, {
+    await axios.put(`${url}/playlists/remove-song`, {
       playlistId: playlistId,
       songId: songId,
     });
@@ -38,11 +51,25 @@ const removeSongFromPlaylist = async (
   }
 };
 
-const getPlaylistData = async (playlistId, setPlaylistData , setSongData) => {
-    const result = await axios.get(`http://localhost:8080/api/playlists/${playlistId}`);
-    setPlaylistData(result.data.data.playlist);
-    setSongData(result.data.data.songs);
-    console.log("getPlaylistData");
-  };
+const getPlaylistData = async (playlistId, setPlaylistData, setSongData) => {
+  const result = await axios.get(
+    `${url}/playlists/${playlistId}`
+  );
+  setPlaylistData(result.data.data.playlist);
+  setSongData(result.data.data.songs);
+  console.log("getPlaylistData");
+};
 
-export { addSongToPlaylist, createPlaylist , removeSongFromPlaylist , getPlaylistData};
+const getAllPLaylist = async (setDataPlaylist) => {
+    const result = await axios.get(`${url}/playlists`)
+    setDataPlaylist(result.data.data);
+}
+
+export {
+  addSongToPlaylist,
+  createPlaylist,
+  removeSongFromPlaylist,
+  getPlaylistData,
+  getAllPLaylist,
+  removePlaylist
+};

@@ -5,19 +5,14 @@ import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { addSongToPlaylist } from "../functions/function";
 import { Link } from "react-router-dom";
+import { getAllPLaylist } from "../functions/function";
 
 const Main = () => {
   const [dataPlaylist, setDataPlaylist] = useState([]);
   const [dataSong, setDataSong] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/playlists")
-      .then((result) => {
-        setDataPlaylist(result.data.data);
-      })
-
-      .catch((err) => console.log(err));
+    getAllPLaylist(setDataPlaylist)
   }, []);
 
   useEffect(() => {

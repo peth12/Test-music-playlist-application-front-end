@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
-import { removeSongFromPlaylist , getPlaylistData } from "../functions/function";
+import { removeSongFromPlaylist, getPlaylistData, removePlaylist } from "../functions/function";
 
 const Playlist = () => {
   const { id } = useParams();
@@ -13,7 +13,7 @@ const Playlist = () => {
   const [reload, setReload] = useState(true);
 
   useEffect(() => {
-    getPlaylistData(id , setPlaylistData, setSongData);
+    getPlaylistData(id, setPlaylistData, setSongData);
   }, [reload]);
 
   return (
@@ -39,7 +39,7 @@ const Playlist = () => {
                   <a>Edit Detail</a>
                 </li>
                 <li>
-                  <a>Delete</a>
+                  <a onClick={() => removePlaylist(id)}>Delete</a>
                 </li>
               </ul>
             </details>
@@ -48,41 +48,47 @@ const Playlist = () => {
       </div>
       <div className="w-full h-full mt-5">
         <div className=" h-full pb-20 overflow-auto ">
-          <table className="table text-center ">
-            {/* head */}
-            <thead>
-              <tr className="text-white text-lg">
-                <th>Songname</th>
-                <th>Artist</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {songData.map((song, index) => (
-                <tr key={index} className="text-white">
-                  <td className="min-w-60">{song.name}</td>
-                  <td className="min-w-60">{song.artist}</td>
-                  <td>
-                    <div className="">
-                      <button
-                        onClick={() =>
-                          removeSongFromPlaylist(
-                            id,
-                            song._id,
-                            setReload,
-                            reload
-                          )
-                        }
-                        className="btn btn-sm btn-error text-white min-w-48"
-                      >
-                        Remove Song
-                      </button>
-                    </div>
-                  </td>
+          {songData.length != 0 ? (
+            <table className="table text-center ">
+              {/* head */}
+              <thead>
+                <tr className="text-white text-lg">
+                  <th>Songname</th>
+                  <th>Artist</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {songData.map((song, index) => (
+                  <tr key={index} className="text-white">
+                    <td className="min-w-60">{song.name}</td>
+                    <td className="min-w-60">{song.artist}</td>
+                    <td>
+                      <div className="">
+                        <button
+                          onClick={() =>
+                            removeSongFromPlaylist(
+                              id,
+                              song._id,
+                              setReload,
+                              reload
+                            )
+                          }
+                          className="btn btn-sm btn-error text-white min-w-48"
+                        >
+                          Remove Song
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <div className="flex h-full justify-center items-center">
+              <h1 className="text-2xl">This playlist has no songs....</h1>
+            </div>
+          )}
         </div>
       </div>
     </div>
