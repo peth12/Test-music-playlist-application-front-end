@@ -3,29 +3,24 @@ import { CiCircleMore } from "react-icons/ci";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { Toaster } from "react-hot-toast";
+import { removeSongFromPlaylist , getPlaylistData } from "../functions/function";
 
 const Playlist = () => {
-    const {id} = useParams()
-    const [playlistData , setPlaylistData] = useState([])
-    const [songData , setSongData] = useState([])
-  useEffect(()  => {
-    const getPlaylistData = async () => {
-        const result = await axios.get(`http://localhost:8080/api/playlists/${id}`)
-        setPlaylistData(result.data.data.playlist)
-        
-        setSongData(result.data.data.songs)
-        
-    }
-    getPlaylistData();
-  }, []);
+  const { id } = useParams();
+  const [playlistData, setPlaylistData] = useState([]);
+  const [songData, setSongData] = useState([]);
+  const [reload, setReload] = useState(true);
+
+  useEffect(() => {
+    getPlaylistData(id , setPlaylistData, setSongData);
+  }, [reload]);
+
   return (
     <div className="flex  flex-col h-screen ">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col sm:flex-row justify-center items-center sm:justify-start  sm:items-end w-full h-auto p-4">
-        <img
-          className="w-60 "
-          src={playlistData.img}
-          alt=""
-        />
+        <img className="w-60 " src={playlistData.img} alt="" />
         {/* Text Box */}
         <div className="ms-5 flex flex-col gap-y-2 mt-10 sm:mt-0">
           <p className="text-base  font-medium">PLAYLIST</p>
@@ -52,31 +47,43 @@ const Playlist = () => {
         </div>
       </div>
       <div className="w-full h-full mt-5">
-      <div className=" h-full pb-20 overflow-auto ">
-            <table className="table text-center ">
-              {/* head */}
-              <thead>
-                <tr className="text-white text-lg">
-                  <th>Songname</th>
-                  <th>Artist</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {songData.map((item , index) => (
-                    <tr key={index} className="text-white">
-                  <td className="min-w-60">{item.name}</td>
-                  <td className="min-w-60">{item.artist}</td>
+        <div className=" h-full pb-20 overflow-auto ">
+          <table className="table text-center ">
+            {/* head */}
+            <thead>
+              <tr className="text-white text-lg">
+                <th>Songname</th>
+                <th>Artist</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {songData.map((song, index) => (
+                <tr key={index} className="text-white">
+                  <td className="min-w-60">{song.name}</td>
+                  <td className="min-w-60">{song.artist}</td>
                   <td>
                     <div className="">
-                      <button className="btn btn-sm btn-error text-white min-w-48">Remove Song</button>
+                      <button
+                        onClick={() =>
+                          removeSongFromPlaylist(
+                            id,
+                            song._id,
+                            setReload,
+                            reload
+                          )
+                        }
+                        className="btn btn-sm btn-error text-white min-w-48"
+                      >
+                        Remove Song
+                      </button>
                     </div>
                   </td>
                 </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

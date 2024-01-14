@@ -1,4 +1,5 @@
 import PlaylistCard from "../Components/PlaylistCard";
+import ModalCreate from "../Components/ModalCreate";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
@@ -35,11 +36,13 @@ const Main = () => {
       <div className="flex flex-col h-auto p-4">
         <div className="flex justify-between items-center">
           <h1 className="text-white text-2xl font-semibold">Playlist</h1>
-          <Link to={'/createPlaylist'}>
-          <button className="btn  btn-primary btn-sm  text-white px-10">
-            Create Playlist
-          </button>
-          </Link>
+          {/* <Link to={"/create"}>
+            <button className="btn  btn-primary btn-sm  text-white px-10">
+              Create Playlist
+            </button>
+          </Link> */}
+          {/* Open the modal using document.getElementById('ID').showModal() method */}
+          <ModalCreate />
         </div>
         <div
           id="scrollbar1"
