@@ -1,33 +1,45 @@
 import PlaylistCard from "../Components/PlaylistCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
+import { addSongToPlaylist } from "../functions/function";
 import { Link } from "react-router-dom";
 
 const Main = () => {
   const [dataPlaylist, setDataPlaylist] = useState([]);
+  const [dataSong, setDataSong] = useState([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/playlists")
       .then((result) => {
-        console.log(result.data);
         setDataPlaylist(result.data.data);
       })
+
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/songs")
+      .then((result) => {
+        setDataSong(result.data.data);
+      })
+
       .catch((err) => console.log(err));
   }, []);
 
   return (
     <div className="flex flex-col min-h-screen">
+      <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col h-auto p-4">
         <div className="flex justify-between items-center">
-          {/* <button className="btn btn-sm btn-primary text-white font-semibold text-lg hover:btn-outline">Create Playlist</button> */}
-          {/* <button className="btn btn-outline btn-primary text-white font-semibold text-lg">Create Playlist</button> */}
-          <h1 className="text-white text-2xl font-semibold">
-            Playlist
-          </h1>
+          <h1 className="text-white text-2xl font-semibold">Playlist</h1>
+          <Link to={'/createPlaylist'}>
           <button className="btn  btn-primary btn-sm  text-white px-10">
             Create Playlist
           </button>
+          </Link>
         </div>
         <div
           id="scrollbar1"
@@ -59,111 +71,34 @@ const Main = () => {
               </thead>
               <tbody>
                 {/* row 1 */}
-                <tr className="text-white">
-                  <td className="min-w-60">Yoyo</td>
-                  <td className="min-w-60">Cy Ganderton</td>
-                  <td>
-                    <div className="">
-                      <details className="dropdown  dropdown-end">
-                        <summary className="m-1 btn btn-sm min-w-48 text-white border-none bg-primary hover:bg-primary">
-                          Add to playlist
-                        </summary>
-                        <ul className="p-2 shadow text-white menu dropdown-content z-[1] bg-primary rounded-box w-52">
-                          <li>
-                            <a>playlist 1</a>
-                          </li>
-                          <li>
-                            <a>playlist 2</a>
-                          </li>
-                        </ul>
-                      </details>
-                    </div>
-                  </td>
-                </tr>
-                <tr className="text-white">
-                  <td className="min-w-60">Yoyo</td>
-                  <td className="min-w-60">Cy Ganderton</td>
-                  <td>
-                    <div className="">
-                      <details className="dropdown  dropdown-end">
-                        <summary className="m-1 btn btn-sm min-w-48 text-white border-none bg-primary hover:bg-primary">
-                          Add to playlist
-                        </summary>
-                        <ul className="p-2 shadow text-white menu dropdown-content z-[1] bg-primary rounded-box w-52">
-                          <li>
-                            <a>playlist 1</a>
-                          </li>
-                          <li>
-                            <a>playlist 2</a>
-                          </li>
-                        </ul>
-                      </details>
-                    </div>
-                  </td>
-                </tr>
-                <tr className="text-white">
-                  <td className="min-w-60">Yoyo</td>
-                  <td className="min-w-60">Cy Ganderton</td>
-                  <td>
-                    <div className="">
-                      <details className="dropdown  dropdown-end">
-                        <summary className="m-1 btn btn-sm min-w-48 text-white border-none bg-primary hover:bg-primary">
-                          Add to playlist
-                        </summary>
-                        <ul className="p-2 shadow text-white menu dropdown-content z-[1] bg-primary rounded-box w-52">
-                          <li>
-                            <a>playlist 1</a>
-                          </li>
-                          <li>
-                            <a>playlist 2</a>
-                          </li>
-                        </ul>
-                      </details>
-                    </div>
-                  </td>
-                </tr>
-                <tr className="text-white">
-                  <td className="min-w-60">Yoyo</td>
-                  <td className="min-w-60">Cy Ganderton</td>
-                  <td>
-                    <div className="">
-                      <details className="dropdown  dropdown-end">
-                        <summary className="m-1 btn btn-sm min-w-48 text-white border-none bg-primary hover:bg-primary">
-                          Add to playlist
-                        </summary>
-                        <ul className="p-2 shadow text-white menu dropdown-content z-[1] bg-primary rounded-box w-52">
-                          <li>
-                            <a>playlist 1</a>
-                          </li>
-                          <li>
-                            <a>playlist 2</a>
-                          </li>
-                        </ul>
-                      </details>
-                    </div>
-                  </td>
-                </tr>
-                <tr className="text-white">
-                  <td className="min-w-60">Yoyo</td>
-                  <td className="min-w-60">Cy Ganderton</td>
-                  <td>
-                    <div className="">
-                      <details className="dropdown  dropdown-end">
-                        <summary className="m-1 btn btn-sm min-w-48 text-white border-none bg-primary hover:bg-primary">
-                          Add to playlist
-                        </summary>
-                        <ul className="p-2 shadow text-white menu dropdown-content z-[1] bg-secondary rounded-box w-52">
-                          <li>
-                            <a>playlist 1</a>
-                          </li>
-                          <li>
-                            <a>playlist 2</a>
-                          </li>
-                        </ul>
-                      </details>
-                    </div>
-                  </td>
-                </tr>
+                {dataSong.map((song, index) => (
+                  <tr key={index} className="text-white">
+                    <td className="min-w-60">{song.name}</td>
+                    <td className="min-w-60">{song.artist}</td>
+                    <td>
+                      <div className="">
+                        <details className="dropdown  dropdown-end">
+                          <summary className="m-1 btn btn-sm min-w-48 text-white border-none bg-primary hover:bg-primary">
+                            Add to playlist
+                          </summary>
+                          <ul className="p-2 shadow text-white menu dropdown-content z-[1] bg-primary rounded-box w-52">
+                            {dataPlaylist.map((playlist, index) => (
+                              <li key={index}>
+                                <a
+                                  onClick={() =>
+                                    addSongToPlaylist(playlist._id, song._id)
+                                  }
+                                >
+                                  {playlist.name}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </details>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

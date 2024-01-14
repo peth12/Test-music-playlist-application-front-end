@@ -12,9 +12,9 @@ const Playlist = () => {
     const getPlaylistData = async () => {
         const result = await axios.get(`http://localhost:8080/api/playlists/${id}`)
         setPlaylistData(result.data.data.playlist)
-        console.log(playlistData);
+        
         setSongData(result.data.data.songs)
-        console.log(songData);
+        
     }
     getPlaylistData();
   }, []);
