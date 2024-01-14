@@ -4,20 +4,29 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Toaster } from "react-hot-toast";
-import { removeSongFromPlaylist, getPlaylistData, removePlaylist } from "../functions/function";
+import {
+  removeSongFromPlaylist,
+  getPlaylistData,
+  removePlaylist,
+} from "../functions/function";
+import ModalUpdatePlaylist from "../Components/ModalUpdatePlaylist";
 
 const Playlist = () => {
   const { id } = useParams();
   const [playlistData, setPlaylistData] = useState([]);
   const [songData, setSongData] = useState([]);
   const [reload, setReload] = useState(true);
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
 
   useEffect(() => {
-    getPlaylistData(id, setPlaylistData, setSongData);
+    getPlaylistData(id, setPlaylistData, setSongData , setName, setDesc );
   }, [reload]);
 
   return (
     <div className="flex  flex-col h-screen ">
+      <ModalUpdatePlaylist setName={setName}  name={name} setDesc={setDesc} desc={desc} id={id}/>
+
       <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col sm:flex-row justify-center items-center sm:justify-start  sm:items-end w-full h-auto p-4">
         <img className="w-60 " src={playlistData.img} alt="" />
@@ -31,14 +40,20 @@ const Playlist = () => {
               Play
             </button>
             <details className="dropdown  dropdown-end">
-              <summary className="m-1 btn border-none bg-transparent hover:bg-transparent">
+              <summary className="m-1 btn border-none bg-transparent  ">
                 <CiCircleMore size={35} />
               </summary>
-              <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+              <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100   rounded-box w-52">
                 <li>
-                  <a>Edit Detail</a>
+                  <a
+                    onClick={() =>
+                      document.getElementById("my_modal_5").showModal()
+                    }
+                  >
+                    Edit Detail
+                  </a>
                 </li>
-                <li>
+                <li className="hover:bg-red-500 rounded-box">
                   <a onClick={() => removePlaylist(id)}>Delete</a>
                 </li>
               </ul>

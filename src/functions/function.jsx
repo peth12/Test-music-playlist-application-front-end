@@ -24,6 +24,13 @@ const createPlaylist = async (name, desc ) => {
   location.reload();
   
 };
+const updatePlaylist = async (id, name , desc) => {
+    await axios.put(`${url}/playlists/edit/${id}`,{
+        name : name,
+        desc : desc
+    })
+    location.reload();
+}
 
 const removePlaylist = async (id) => {
     await axios.delete(`${url}/playlists/${id}`);
@@ -51,12 +58,14 @@ const removeSongFromPlaylist = async (
   }
 };
 
-const getPlaylistData = async (playlistId, setPlaylistData, setSongData) => {
+const getPlaylistData = async (playlistId, setPlaylistData, setSongData , setName, setDesc) => {
   const result = await axios.get(
     `${url}/playlists/${playlistId}`
   );
   setPlaylistData(result.data.data.playlist);
   setSongData(result.data.data.songs);
+  setName(result.data.data.playlist.name);
+  setDesc(result.data.data.playlist.desc);
   console.log("getPlaylistData");
 };
 
@@ -71,5 +80,6 @@ export {
   removeSongFromPlaylist,
   getPlaylistData,
   getAllPLaylist,
-  removePlaylist
+  removePlaylist,
+  updatePlaylist
 };
