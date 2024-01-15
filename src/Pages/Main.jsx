@@ -18,7 +18,7 @@ const Main = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/songs")
+      .get("https://playlist-tief.onrender.com/api/songs")
       .then((result) => {
         setDataSong(result.data.data);
       })

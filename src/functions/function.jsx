@@ -34,7 +34,7 @@ const updatePlaylist = async (id, name , desc) => {
 
 const removePlaylist = async (id) => {
     await axios.delete(`${url}/playlists/${id}`);
-    window.location.href = "http://localhost:5173/"
+    window.location.href = "https://test-music-playlist-application-front-end.vercel.app/"
 }
 
 const removeSongFromPlaylist = async (
