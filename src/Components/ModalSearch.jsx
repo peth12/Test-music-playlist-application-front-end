@@ -13,11 +13,11 @@ const ModalSearch = () => {
       {" "}
       <button
         className="btn  btn-primary btn-sm  text-white px-10"
-        onClick={() => document.getElementById("my_modal_5").showModal()}
+        onClick={() => document.getElementById("my_modal_6").showModal()}
       >
         Search
       </button>
-      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+      <dialog id="my_modal_6" className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Search</h3>
 
