@@ -74,6 +74,16 @@ const getAllPLaylist = async (setDataPlaylist) => {
     setDataPlaylist(result.data.data);
 }
 
+const searchData = async (search ,setPlaylist , setSong) => {
+    const result = await axios.post(`${url}/`,{
+        search : search
+    });
+    setPlaylist(result.data.data.playlists)
+    setSong(result.data.data.songs)
+    console.log(result.data.data);
+
+}
+
 export {
   addSongToPlaylist,
   createPlaylist,
@@ -81,5 +91,6 @@ export {
   getPlaylistData,
   getAllPLaylist,
   removePlaylist,
-  updatePlaylist
+  updatePlaylist,
+  searchData
 };

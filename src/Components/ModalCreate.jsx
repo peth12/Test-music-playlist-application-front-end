@@ -10,7 +10,7 @@ const ModalCreate = () => {
     <>
       {" "}
       <button
-        className="btn  btn-primary btn-sm  text-white px-10"
+        className="btn  btn-primary btn-sm  text-white px-5"
         onClick={() => document.getElementById("my_modal_5").showModal()}
       >
         Create Playlist

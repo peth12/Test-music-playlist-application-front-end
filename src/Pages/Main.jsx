@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { addSongToPlaylist } from "../functions/function";
 import { Link } from "react-router-dom";
 import { getAllPLaylist } from "../functions/function";
+import ModalSearch from "../Components/ModalSearch";
 
 const Main = () => {
   const [dataPlaylist, setDataPlaylist] = useState([]);
@@ -30,14 +31,11 @@ const Main = () => {
       <Toaster position="top-center" reverseOrder={false} />
       <div className="flex flex-col h-auto p-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-white text-2xl font-semibold">Playlist</h1>
-          {/* <Link to={"/create"}>
-            <button className="btn  btn-primary btn-sm  text-white px-10">
-              Create Playlist
-            </button>
-          </Link> */}
-          {/* Open the modal using document.getElementById('ID').showModal() method */}
+          <h1 className="hidden sm:block text-white text-2xl font-semibold">Playlist</h1>
+          <div className="">
+          <ModalSearch/>
           <ModalCreate />
+          </div>
         </div>
         <div
           id="scrollbar1"
