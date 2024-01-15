@@ -1,7 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const url = "http://localhost:8080/api"
+const url = "https://playlist-tief.onrender.com/api"
 
 const addSongToPlaylist = (playlistId, songId) => {
   axios
