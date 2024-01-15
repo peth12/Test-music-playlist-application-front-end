@@ -16,13 +16,13 @@ database : mongodb
 song -> is mock data used for add song to playlist 
 
 song Model -> {
-  name -> is song name
+  name -> is song name ,
   artist -> artist name
 }
 
 playlist Model -> {
-  name -> is playlist name
-  desc -> description for playlist
+  name -> is playlist name ,
+  desc -> description for playlist ,
   songs -> is array for collect song
 }
 
